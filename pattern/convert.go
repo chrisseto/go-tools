@@ -8,6 +8,10 @@ import (
 	"reflect"
 )
 
+type Converter interface {
+	Convert() Node
+}
+
 var astTypes = map[string]reflect.Type{
 	"Ellipsis":       reflect.TypeOf(ast.Ellipsis{}),
 	"RangeStmt":      reflect.TypeOf(ast.RangeStmt{}),
@@ -82,6 +86,8 @@ func ASTToNode(node interface{}) Node {
 		}
 	case *ast.ParenExpr:
 		return ASTToNode(node.X)
+	case Converter:
+		return node.Convert()
 	}
 
 	if node, ok := node.(ast.Node); ok {
