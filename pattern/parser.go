@@ -27,6 +27,10 @@ func MustParse(s string) Pattern {
 	return pat
 }
 
+func Roots(node Node, m map[reflect.Type]struct{}) {
+	roots(node, m)
+}
+
 func roots(node Node, m map[reflect.Type]struct{}) {
 	switch node := node.(type) {
 	case Or:
